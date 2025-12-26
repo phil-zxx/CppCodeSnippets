@@ -1,6 +1,6 @@
 #include <pybind11/pybind11.h>
-#include <pybind11/operators.h>
 #include <MyVector.hpp>
+#include <Vector3.hpp>
 
 namespace py = pybind11;
 
@@ -22,4 +22,12 @@ PYBIND11_MODULE(PyBindSample, m) {
         .def("__getitem__", [](MyVector& vec, const size_t& idx) { return vec[idx]; })
         .def("__setitem__", [](MyVector& vec, const size_t& idx, const double& value) { vec[idx] = value; })
         .def("__repr__",    &MyVector::toString);
+
+    py::class_<Vector3>(m, "Vector3")
+        .def(py::init<int, int, int>(), py::arg("x"), py::arg("y"), py::arg("z"))
+        .def("length", &Vector3::length)
+        .def_readwrite("x", &Vector3::x)
+        .def_readwrite("y", &Vector3::y)
+        .def_readwrite("z", &Vector3::z);
+
 }
